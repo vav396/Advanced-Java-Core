@@ -1,4 +1,3 @@
-
 package com.javalearning.module3.scheduler;
 
 import java.time.LocalDateTime;
@@ -17,31 +16,31 @@ public class SchedulerDemo {
         LocalDateTime nextMonth = LocalDateTime.now().plusMonths(1);
         Task task3 = new Task("Подготовить презентацию", nextMonth, TaskStatus.PENDING);
 
-        // Выводим все задачи
+        // Выводим до проверки
+        System.out.println("До проверки:");
         System.out.println(task1);
         System.out.println(task2);
         System.out.println(task3);
 
-        // Проверяем статусы задач
-        checkStatus(task1);
-        checkStatus(task2);
-        checkStatus(task3);
+        // Проверяем и обновляем
+        task1 = checkStatus(task1);
+        task2 = checkStatus(task2);
+        task3 = checkStatus(task3);
 
-        // После проверки снова выводим
+        // Выводим после проверки
         System.out.println("\nПосле проверки:");
         System.out.println(task1);
         System.out.println(task2);
         System.out.println(task3);
     }
 
-    // Метод для проверки и обновления статуса задачи
-    public static void checkStatus(Task task) {
+    public static Task checkStatus(Task task) {
         LocalDateTime now = LocalDateTime.now();
 
         if (task.status() == TaskStatus.PENDING) {
             if (task.dueDate().isBefore(now)) {
                 System.out.println("Задача \"" + task.title() + "\" просрочена!");
-                task = new Task(task.title(), task.dueDate(), TaskStatus.OVERDUE);
+                return new Task(task.title(), task.dueDate(), TaskStatus.OVERDUE);
             } else {
                 System.out.println("Задача \"" + task.title() + "\" ещё актуальна.");
             }
@@ -50,5 +49,7 @@ public class SchedulerDemo {
         } else {
             System.out.println("Задача \"" + task.title() + "\" выполнена или неактивна.");
         }
+
+        return task;
     }
 }
