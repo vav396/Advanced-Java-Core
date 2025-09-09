@@ -20,6 +20,8 @@ public class Main {
             }else if (t instanceof ElectricCar) {
                 ((ElectricCar) t).service();
             }
+
+
         }
     }
 }
